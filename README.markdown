@@ -58,3 +58,12 @@ Mustache Documentation
 See **Tag Types** section at
 [http://github.com/defunkt/mustache/](http://github.com/defunkt/mustache/) 
 for more information on supported tags.
+
+Todo
+----
+
+* Better parse time errors. Currently they are decent when partials are not involved
+  but break down once partials are involved.
+* Implement some compile time optimizations. The big one is predetermining when a
+  enumerable actually needs to inherit the full context. Cutting this out can be huge.
+* Cleanup the Preprocessor methods. They are a bit unwieldy.  
