@@ -29,26 +29,15 @@ Mu.templateRoot = "./examples";
     
     var compiled = Mu.compile(name + '.html').wait();
     
-    assert.equal(compiled(js), text);
-    sys.puts(name + ' passed');
+    var buffer = '';
+    compiled(js).addListener('data', function (c) { buffer += c; })
+                .addListener('eof', function () {
+                  assert.equal(buffer, text);
+                  sys.puts(name + ' passed');
+                });
   } catch (e) {
     sys.puts("Error in template: " + name);
     sys.puts(e.stack);
   }
   
 });
-
-// (function testCompileFile() {
-//   var js = eval('(' + posix.cat('./examples/complex.js').wait() + ')');
-//   var text = posix.cat('./examples/complex.txt').wait();
-//   
-//   var promise = Mu.compile('./examples/complex.html')
-//     .addCallback(function (compiled) {
-//       assert.equal(compiled(js).replace(/[(\n) ]/g, ''), text.replace(/[(\n) ]/g, ''));
-//       sys.puts('testCompileFile passed');
-//     })
-//     .addErrback(function (e) {
-//       throw new Error("testCompileFile failed.");
-//     })
-// })();
-// 

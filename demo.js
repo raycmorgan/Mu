@@ -14,7 +14,10 @@ var ctx = {
 
 Mu.render('simple.html', ctx)
   .addCallback(function (output) {
-    sys.puts(output);
+    var buffer = '';
+    
+    output.addListener('data', function (c) {buffer += c; })
+          .addListener('eof', function () { sys.puts(buffer); });
   })
   .addErrback(function (e) {
     sys.puts(e.stack);

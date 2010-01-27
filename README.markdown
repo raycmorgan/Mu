@@ -9,15 +9,29 @@ Mu is a Mustache based template engine for Node.js. Mu compiles mustache
 templates into an extremely fast executable function.
 
 
+What makes Mu cool?
+-------------------
+
+* It is very fast
+* Supports async parsing/compiling
+* Rendering is streamed
+
+
 Benchmarks
 ----------
 
 Rendering examples/complex.html.mu 1 million times yields the following results:
 
     Ruby Mustache - 112 secs  (benchmarks/rb/complex_view.rb)
-               Mu -  24 secs  (benchmarks/million_complex.js)
+               Mu -  40 secs  (benchmarks/million_complex.js)
 
 Tested on a 2.4 GHz Intel Core 2 Duo MacBook Pro
+
+Mu sync rendering was benchmarking in at 24 secs, but I felt it was much more
+important to stream the rendering. Streaming adds a pretty set overhead of
+about 14µs (microseconds) to each template render to setup the event emitter.
+It also adds a variable extra amount of time due to the additional function calls.
+The million_complex.js caused 2µs per render addition.
 
 
 Usage (from demo.js)
@@ -39,11 +53,15 @@ Usage (from demo.js)
 
     Mu.render('simple.html', ctx)
       .addCallback(function (output) {
-        sys.puts(output);
+        var buffer = '';
+
+        output.addListener('data', function (c) {buffer += c; })
+              .addListener('eof', function () { sys.puts(buffer); });
       })
       .addErrback(function (e) {
         sys.puts(e.stack);
       });
+    
 
 Which yields:
 

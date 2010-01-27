@@ -14,10 +14,19 @@ sys.puts(name + '.html')
 
 var compiled = Mu.compile(name + '.html').wait();
 
-sys.puts(compiled(js));
+var buffer = '';
+compiled(js).addListener('data', function (c) { buffer += c; })
+            .addListener('eof', function () { sys.puts(buffer); });
 
+var i = 0;
 var d = new Date();
-for (var i = 0; i < 1000000; i++) {
-  compiled(js);
-}
-sys.puts("Time taken: " + ((new Date() - d) / 1000) + "secs");
+
+(function go() {
+  if (i++ < 1000000) {
+    compiled(js).addListener('eof', function () { go(); });
+  }
+})();
+
+process.addListener('exit', function () {
+  sys.error("Time taken: " + ((new Date() - d) / 1000) + "secs");
+});
