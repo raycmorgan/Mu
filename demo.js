@@ -33,7 +33,7 @@ ctx = {
 }
 
 
-Mu.render('complex.html', ctx)
+Mu.render('complex.html', ctx, {bufferLength: 10})
   .addCallback(function (output) {
     var buffer = '';
     
