@@ -12,12 +12,39 @@ var ctx = {
   in_ca: true
 };
 
-Mu.render('simple.html', ctx)
+ctx = {
+  header: function() {
+    return "Colors";
+  },
+  item: [
+      {name: "red", current: true, url: "#Red"},
+      {name: "green", current: false, url: "#Green"},
+      {name: "blue", current: false, url: "#Blue"}
+  ],
+  link: function() {
+    return this["current"] !== true;
+  },
+  list: function() {
+    return this.item.length !== 0;
+  },
+  empty: function() {
+    return this.item.length === 0;
+  }
+}
+
+
+Mu.render('complex.html', ctx)
   .addCallback(function (output) {
     var buffer = '';
     
-    output.addListener('data', function (c) {buffer += c; })
-          .addListener('eof', function () { sys.puts(buffer); });
+    output.addListener('data', function (c) {
+      sys.print(c);
+      output.pause();
+      setTimeout(function () {
+        output.resume();
+      }, 500);
+    })
+    .addListener('eof', function () { sys.puts('\nDone'); });
   })
   .addErrback(function (e) {
     sys.puts(e.stack);
