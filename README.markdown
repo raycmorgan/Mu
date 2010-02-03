@@ -56,7 +56,7 @@ Usage (from demo.js)
         var buffer = '';
 
         output.addListener('data', function (c) {buffer += c; })
-              .addListener('eof', function () { sys.puts(buffer); });
+              .addListener('end', function () { sys.puts(buffer); });
       })
       .addErrback(function (e) {
         sys.puts(e.stack);

@@ -31,7 +31,7 @@ Mu.templateRoot = "./examples";
     
     var buffer = '';
     compiled(js).addListener('data', function (c) { buffer += c; })
-                .addListener('eof', function () {
+                .addListener('end', function () {
                   assert.equal(buffer, text);
                   sys.puts(name + ' passed');
                 });

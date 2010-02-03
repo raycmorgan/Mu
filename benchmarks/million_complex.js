@@ -16,14 +16,14 @@ var compiled = Mu.compile(name + '.html').wait();
 
 var buffer = '';
 compiled(js).addListener('data', function (c) { buffer += c; })
-            .addListener('eof', function () { sys.puts(buffer); });
+            .addListener('end', function () { sys.puts(buffer); });
 
 var i = 0;
 var d = new Date();
 
 (function go() {
   if (i++ < 1000000) {
-    compiled(js).addListener('eof', function () { go(); });
+    compiled(js).addListener('end', function () { go(); });
   }
 })();
 

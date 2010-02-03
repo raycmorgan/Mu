@@ -16,5 +16,5 @@ exports.compile = function (filename, promise) {
 exports.render = function (ctx, compiled, stream, options) {
   compiled(ctx, options)
     .addListener('data', function (chunk) { stream.write(chunk); })
-    .addListener('eof', function () { stream.close(); });
+    .addListener('end', function () { stream.close(); });
 }

@@ -26,7 +26,7 @@ Mu.render('simple.html', ctx, {chunkSize: 10})
           output.resume();
         }, 500);
       })
-      .addListener('eof', function () { sys.puts("\n\nDONE"); });
+      .addListener('end', function () { sys.puts("\n\nDONE"); });
   })
   .addErrback(function (e) {
     sys.puts(e.stack);
