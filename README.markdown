@@ -51,16 +51,16 @@ Usage (from demo.js)
       in_ca: true
     };
 
-    Mu.render('simple.html', ctx)
-      .addCallback(function (output) {
-        var buffer = '';
+    Mu.render('simple.html', ctx, {}, function (err, output) {
+      if (err) {
+        throw err;
+      }
+      
+      var buffer = '';
 
-        output.addListener('data', function (c) {buffer += c; })
-              .addListener('end', function () { sys.puts(buffer); });
-      })
-      .addErrback(function (e) {
-        sys.puts(e.stack);
-      });
+      output.addListener('data', function (c) {buffer += c; })
+            .addListener('end', function () { sys.puts(buffer); });
+    });
     
 
 Which yields:

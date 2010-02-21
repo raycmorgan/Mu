@@ -3,14 +3,8 @@ var Mu = require('./lib/mu');
 Mu.templateRoot = '';
 Mu.templateExtension = '';
 
-exports.compile = function (filename, promise) {
-  Mu.compile(filename)
-    .addCallback(function (compiled) {
-      promise.emit('success', compiled);
-    })
-    .addErrback(function (e) {
-      promise.emit('error', e);
-    });
+exports.compile = function (filename, callback) {
+  Mu.compile(filename, callback);
 }
 
 exports.render = function (ctx, compiled, stream, options) {

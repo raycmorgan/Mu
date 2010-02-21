@@ -1,5 +1,5 @@
 var sys = require('sys'),
-    posix = require('posix'),
+    fs = require('fs'),
     assert = require('assert');
 var Mu = require('./lib/mu');
 
@@ -22,19 +22,24 @@ Mu.templateRoot = "./examples";
 ].forEach(function (name) {
   
   try {
-    var js = posix.cat('./examples/' + name + '.js').wait();
-    var text = posix.cat('./examples/' + name + '.txt').wait();
+    var js = fs.readFileSync('./examples/' + name + '.js');
+    var text = fs.readFileSync('./examples/' + name + '.txt');
 
     js = eval('(' + js + ')');
     
-    var compiled = Mu.compile(name + '.html').wait();
-    
-    var buffer = '';
-    compiled(js).addListener('data', function (c) { buffer += c; })
-                .addListener('end', function () {
-                  assert.equal(buffer, text);
-                  sys.puts(name + ' passed');
-                });
+    Mu.compile(name + '.html', function (err, compiled) {
+      try {
+        var buffer = '';
+        compiled(js).addListener('data', function (c) { buffer += c; })
+                    .addListener('end', function () {
+                      assert.equal(buffer, text);
+                      sys.puts(name + ' passed');
+                    });
+      } catch (e) {
+        sys.puts("Error in template: " + name);
+        sys.puts(e.stack);
+      }
+    });
   } catch (e) {
     sys.puts("Error in template: " + name);
     sys.puts(e.stack);

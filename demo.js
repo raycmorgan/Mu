@@ -14,20 +14,20 @@ var ctx = {
 
 sys.puts("Outputting examples/simple.html.mu with a chunkSize of 10\n");
 
-Mu.render('simple.html', ctx, {chunkSize: 10})
-  .addCallback(function (output) {
-    var buffer = '';
-    
-    output
-      .addListener('data', function (c) {
-        sys.print(c); // output chunk
-        output.pause(); // pause for demo
-        setTimeout(function () { // wait 500ms and resume for demo
-          output.resume();
-        }, 500);
-      })
-      .addListener('end', function () { sys.puts("\n\nDONE"); });
-  })
-  .addErrback(function (e) {
-    sys.puts(e.stack);
-  });
+Mu.render('simple.html', ctx, {chunkSize: 10}, function (err, output) {
+  if (err) {
+    throw err;
+  }
+  
+  var buffer = '';
+  
+  output
+    .addListener('data', function (c) {
+      sys.print(c); // output chunk
+      output.pause(); // pause for demo
+      setTimeout(function () { // wait 500ms and resume for demo
+        output.resume();
+      }, 500);
+    })
+    .addListener('end', function () { sys.puts("\n\nDONE"); });
+});
