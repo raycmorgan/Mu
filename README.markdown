@@ -69,6 +69,19 @@ Which yields:
     You have just won $10000!
     Well, $6000, after taxes.
     
+Using Mu.compileText
+--------------------
+
+    var sys = require('sys');
+    var Mu = require('./lib/mu');
+
+    var tmpl = "Hello {{> part}}. Your name is: {{name}}!";
+    var partials = {part: "World"};
+    var compiled = Mu.compileText(tmpl, partials);
+    
+    compiled({name: "Chris"})
+      .addListener('data', function (c) { sys.puts(c) });
+
 
 Mustache Documentation
 ----------------------

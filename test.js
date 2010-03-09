@@ -46,3 +46,18 @@ Mu.templateRoot = "./examples";
   }
   
 });
+
+(function () {
+  
+  var buffer = '';
+  var tmpl = "Hello {{> part}}";
+  var partials = {part: "World"};
+  
+  var compiled = Mu.compileText(tmpl, partials);
+  compiled({}).addListener('data', function (c) { buffer += c; })
+              .addListener('end', function () {
+                assert.equal(buffer, "Hello World");
+                sys.puts('compileText passed');
+              });
+  
+}());
