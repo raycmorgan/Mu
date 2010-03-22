@@ -1,1 +1,1 @@
-Again, {{title}}!
+<p class="again">Again, {{title}}!</p>
