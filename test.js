@@ -13,6 +13,7 @@ Mu.templateRoot = "./examples";
   'error_not_found',
   'escaped',
   'hash_instead_of_array',
+  'inverted',
   'partial',
   'recursion_with_same_names',
   'reuse_of_enumerables',
@@ -36,12 +37,12 @@ Mu.templateRoot = "./examples";
                       sys.puts(name + ' passed');
                     });
       } catch (e) {
-        sys.puts("Error in template: " + name);
+        sys.puts("Error in template (render time): " + name);
         sys.puts(e.stack);
       }
     });
   } catch (e) {
-    sys.puts("Error in template: " + name);
+    sys.puts("Error in template (compile time): " + name);
     sys.puts(e.stack);
   }
   
