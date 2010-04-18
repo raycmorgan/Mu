@@ -72,11 +72,11 @@ Mu.templateRoot = "./examples";
     name: 'Jim',
     changeName: {
       name: function (async) {
-        setTimeout(function () {
-          async.resume("Tim");
-        }, 250);
-        
-        return async.pause;
+        return function (_, render) {
+          setTimeout(function () {
+            render("Tim");
+          }, 250);
+        };
       }
     }
   };

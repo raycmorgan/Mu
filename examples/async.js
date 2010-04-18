@@ -1,9 +1,11 @@
 {
-  name: function (async) {
-    setTimeout(function () {
-      async.resume("Jim");
-    }, 250);
-    
-    return async.pause;
+  name: function () {
+    return function () {
+      var self = this;
+      
+      setTimeout(function () {
+        self.render("Jim");
+      }, 250);
+    };
   }
 }
