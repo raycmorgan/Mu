@@ -12,9 +12,9 @@ var ctx = {
   in_ca: true
 };
 
-sys.puts("Outputting examples/simple.html.mu with a chunkSize of 10\n");
+sys.puts("Outputting examples/simple.html.mu with a delay after each chunk\n");
 
-Mu.render('simple.html', ctx, {chunkSize: 10}, function (err, output) {
+Mu.render('simple.html', ctx, {}, function (err, output) {
   if (err) {
     throw err;
   }

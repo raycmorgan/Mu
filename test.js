@@ -6,6 +6,7 @@ var Mu = require('./lib/mu');
 Mu.templateRoot = "./examples";
 
 [
+  'async',
   'comments',
   'complex',
   'deep_partial',
@@ -60,5 +61,39 @@ Mu.templateRoot = "./examples";
                 assert.equal(buffer, "Hello World");
                 sys.puts('compileText passed');
               });
+  
+}());
+
+// Test context safety
+(function () {
+  
+  var buffer = '', buffer2 = '';
+  var context = {
+    name: 'Jim',
+    changeName: {
+      name: function (async) {
+        setTimeout(function () {
+          async.resume("Tim");
+        }, 250);
+        
+        return async.pause;
+      }
+    }
+  };
+  var tmpl = "Hello {{name}} {{#changeName}}{{name}}{{/changeName}}";
+  
+  var compiled = Mu.compileText(tmpl, {});
+  
+  compiled(context)
+    .addListener('data', function (c) { buffer += c; })
+    .addListener('end', function () {
+      assert.equal(buffer, "Hello Jim Tim");
+    });
+    
+  compiled(context)
+    .addListener('data', function (c) { buffer2 += c; })
+    .addListener('end', function () {
+      assert.equal(buffer2, "Hello Jim Tim");
+    });
   
 }());

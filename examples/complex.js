@@ -1,5 +1,5 @@
 {
-  header: function() {
+  header: function(async) {
     return "Colors";
   },
   item: [

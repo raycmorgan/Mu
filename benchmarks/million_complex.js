@@ -17,19 +17,18 @@ Mu.compile(name + '.html', function (err, compiled) {
     throw err;
   }
   
-  var buffer = '';
-  compiled(js).addListener('data', function (c) { buffer += c; })
-              .addListener('end', function () { sys.puts(buffer); });
+  compiled(js).addListener('data', function (c) { sys.print(c); })
+              .addListener('end', function () { sys.print("\n") });
 
   var i = 0;
   var d = new Date();
-
+  
   (function go() {
     if (i++ < 1000000) {
       compiled(js).addListener('end', function () { go(); });
     }
   })();
-
+  
   process.addListener('exit', function () {
     sys.error("Time taken: " + ((new Date() - d) / 1000) + "secs");
   });
