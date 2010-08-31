@@ -1,6 +1,122 @@
-var sys = require('sys');
+var sys    = require('sys'),
+    Buffer = require('buffer').Buffer;
+    baseProto = ({}).__proto__;
 
-exports.tokenize = function (template, options) {
+exports.run = run;
+exports.tokenize = tokenize;
+
+function run(tokens, context, callback) {
+  if (tokens[0] !== 'multi') {
+    throw new Error('WTF did you give me?');
+  }
+
+  var i = 1;
+
+  function next() {
+    var token = tokens[i++];
+
+    if (!token) {
+      return callback ? callback() : sys.print("\n");
+    }
+
+    switch (token[0]) {
+    case 'static':
+      sys.print(token[2]);
+      next();
+      break;
+
+    case 'mustache':    
+      switch (token[1]) {
+      case 'utag': // Unescaped Tag
+        sys.print(s(normalize(context, token[2])));
+        return next();
+
+      case 'etag': // Escaped Tag
+        sys.print(escape(s(normalize(context, token[2]))));
+        return next();
+
+      case 'section':
+        if (normalize(context, token[2])) {
+          return section(context, token[2], token[3], next);
+        } else {
+          return next();
+        }
+
+      case 'inverted_section':
+        if (!normalize(context, token[2])) {
+          return section(context, token[2], token[3], next);
+        } else {
+          return next();
+        }
+      }
+
+    }
+  }
+
+  next();
+}
+
+function s(val) {
+  return typeof val === 'undefined' ? '' : val.toString();
+}
+
+function escape(string) {
+  return string.replace(/[&<>"]/g, escapeReplace);
+}
+
+function normalize(view, name) {
+  var val = view[name];
+
+  if (typeof(val) === 'function') {
+    val = view[name]();
+  }
+
+  return val;
+}
+
+function section(view, name, tokens, callback) {
+  var val = normalize(view, name);
+
+  if (typeof val === 'boolean') {
+    return val ? run(tokens, val, callback) : callback();
+  }
+
+  if (val instanceof Array) {
+    var i = 0;
+
+    (function next() {
+      var item = val[i++];
+
+      if (item) {
+        var proto = insertProto(item, view);
+        run(tokens, item, next);
+        proto.__proto__ = baseProto;
+      } else {
+        callback();
+      }
+
+    }());
+
+    return;
+  }
+
+  if (typeof val === 'object') {
+    var proto = insertProto(val, view);
+    run(tokens, val, callback);
+    proto.__proto__ = baseProto;
+    return;
+  }
+
+  return callback();
+}
+
+
+
+//
+// Parser
+//
+
+function tokenize(template, options) {
   var parser = new Parser(template, options);
   return parser.tokenize();
 }
@@ -43,8 +159,11 @@ Parser.prototype = {
     }
     
     var content = this.buffer.substring(0, index);
+        buffer  = new Buffer(Buffer.byteLength(content));
+    
     if (content !== '') {
-      this.tokens.push(['static', content]);
+      buffer.write(content, 'utf8', 0);
+      this.tokens.push(['static', content, buffer]);
     }
     
     this.buffer = this.buffer.substring(index + this.otag.length);
@@ -151,14 +270,31 @@ function e(text) {
   return text.replace(arguments.callee.sRE, '\\$1');
 }
 
-
-(function test () {
+//
+//
+//
+function insertProto(obj, newProto, replaceProto) {
+  replaceProto = replaceProto || baseProto;
+  var proto = obj.__proto__;
+  while (proto !== replaceProto) {
+    obj = proto;
+    proto = proto.__proto__;
+  }
   
-  var template = 
-    //"{{title}}: {{= <% %> }} <% top %> <%= {{ }} %> " +
-    "Hello {{!dude}} {{name}} {{{cool}}} " + 
-    "{{#day}} {{^foo}}bar {{bar}}{{/foo}} {{/day}}!";
-  
-  sys.puts(sys.inspect(exports.tokenize(template), false, 10));
+  obj.__proto__ = newProto;
+  return obj;
+}
 
-}());
+//
+//
+//
+function escapeReplace(char) {
+  switch (char) {
+    case '<': return '&lt;';
+    case '>': return '&gt;';
+    case '&': return '&amp;';
+    case '"': return '&quot;';
+    default: return char;
+  }
+}
+
