@@ -34,7 +34,7 @@ mu.root = path.join(__dirname, 'examples');
     
     var buffer = '';
     
-    mu.render(name + '.html', js)
+    mu.render(parsed, js)
       .on('data', function (c) { buffer += c.toString(); })
       .on('end', function () {
         assert.equal(buffer, text);
