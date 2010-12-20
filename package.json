@@ -1,0 +1,7 @@
+{ "name": "mu"
+, "description": "A Mustache template engine for Node.js"
+, "keywords": ["template", "mustache"]
+, "version" : "0.5.0"
+, "homepage": "http://github.com/raycmorgan/mu"
+, "author" : "RayMorgan <ray@simple-apps.com>"
+}

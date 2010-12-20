@@ -1,0 +1,6 @@
+Hello World
+{{#person}}
+\/\\tHow are you, {{#person}}{{name}}{{/person}}?
+{{/person}}
+Goodbye.
+

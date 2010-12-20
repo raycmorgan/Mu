@@ -45,14 +45,16 @@ mu.compileText('bar.html', template);
 //     .on('error', function (err) {});
 // });
 
+var numErrors = 0;
+
 var stream = mu.render('bar.html', view)
   .on('data', function (data) { 
     sys.print(data);
     //stream.pause();
-    //setTimeout(function () { stream.resume(); }, 1000);
+    //setTimeout(function () { stream.resume(); }, 50);
   })
-  .on('end',  function () { sys.print('\nDONE\n'); })
-  .on('error', function (err) {});
+  .on('end',  function () { sys.print('\nDONE, Errors: ' + numErrors + '\n'); })
+  .on('error', function (err) { numErrors++; });
 
 
 
