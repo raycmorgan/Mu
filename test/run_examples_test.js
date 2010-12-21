@@ -6,6 +6,7 @@ var assert = require('assert'),
 mu.root = path.join(__dirname, 'examples');
 
 [
+ 'boolean',
  'comments',
  'complex',
  'deep_partial',
