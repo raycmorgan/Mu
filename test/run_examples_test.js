@@ -22,7 +22,21 @@ mu.root = path.join(__dirname, 'examples');
   'two_in_a_row',
   'unescaped',
 ].forEach(function (name) {
+  var js   = fs.readFileSync(path.join(mu.root, name + '.js')).toString(),
+      text = fs.readFileSync(path.join(mu.root, name + '.txt')).toString();
   
+  js = eval('(' + js + ')');
+  
+  var buffer = '';
+  
+  mu.compileAndRender(name + '.html', js)
+    .on('data', function (c) { buffer += c.toString(); })
+    .on('end', function () {
+      assert.equal(buffer, text);
+      console.log(name + ' passed');
+    })
+    
+  /*
   var js   = fs.readFileSync(path.join(mu.root, name + '.js')).toString(),
       text = fs.readFileSync(path.join(mu.root, name + '.txt')).toString();
 
@@ -45,4 +59,5 @@ mu.root = path.join(__dirname, 'examples');
       //  console.log('Error: ' + error);
       //});
   });
+  */
 });
