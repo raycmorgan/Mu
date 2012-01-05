@@ -1,4 +1,4 @@
-{ "name": "mustache-mu"
+{ "name": "mu2"
 , "description": "A Mustache template engine for Node.js"
 , "keywords": ["template", "mustache"]
 , "version" : "0.5.4"
