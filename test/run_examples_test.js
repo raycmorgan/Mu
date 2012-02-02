@@ -6,10 +6,10 @@ var assert = require('assert'),
 mu.root = path.join(__dirname, 'examples');
 
 [
- 'boolean',
- 'comments',
- 'complex',
- 'deep_partial',
+  'boolean',
+  'comments',
+  'complex',
+  'deep_partial',
   // 'delimiters',
   'error_not_found',
   'escaped',
@@ -19,6 +19,7 @@ mu.root = path.join(__dirname, 'examples');
   'recursion_with_same_names',
   'reuse_of_enumerables',
   'simple',
+  'twice',
   'two_in_a_row',
   'unescaped',
 ].forEach(function (name) {
@@ -28,13 +29,14 @@ mu.root = path.join(__dirname, 'examples');
   js = eval('(' + js + ')');
   
   var buffer = '';
-  
+
   mu.compileAndRender(name + '.html', js)
     .on('data', function (c) { buffer += c.toString(); })
     .on('end', function () {
+      console.log("Testing: " + name);
       assert.equal(buffer, text);
-      console.log(name + ' passed');
-    })
+      console.log(name + ' passed\n');
+    });
     
   /*
   var js   = fs.readFileSync(path.join(mu.root, name + '.js')).toString(),
