@@ -7,6 +7,10 @@ now you have to:
 
     npm install mu2
 
+## Issues
+
+Currently mu does not support changing the tag form ({{ }} to say <% %>).
+
 ## Usage
 
 There are a few ways to use mu 0.5. Here is the simplest:
