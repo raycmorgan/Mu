@@ -1,5 +1,7 @@
 # Mu - a fast, streaming Node.js Mustache engine
 
+Warning: This version is not API compatible with 0.1.
+
 ## Install
 
 I have had some issues with my npm auth and got it in a bit of a rut, so for
