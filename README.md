@@ -60,6 +60,7 @@ in development mode (so the changes are immediately reflected).
 
       A path to lookup templates from. Defaults to the working directory.
 
+
     mu.compileAndRender(String templateName, Object view)
 
       Returns: Stream
@@ -68,6 +69,7 @@ in development mode (so the changes are immediately reflected).
       template will be compiled and then rendered to the stream. Subsequent
       calls with the same template name will use a cached version of the compiled
       template to improve performance (a lot).
+
 
     mu.compile(filename, callback)
 
@@ -79,6 +81,7 @@ in development mode (so the changes are immediately reflected).
       use the internal cache when called multiple times, though it does add the
       compiled form to the cache.
 
+
     mu.compileText(String name, String template, Function callback)
 
       Returns nil
@@ -86,6 +89,7 @@ in development mode (so the changes are immediately reflected).
 
       Similar to mu.compile except it taks in a name and the actual string of the
       template. Does not do disk io. Does not auto-compile partials either.
+
 
     mu.render(Mixed filenameOrCompiledTemplate, Object view)
 
@@ -97,12 +101,14 @@ in development mode (so the changes are immediately reflected).
       This function is responsible for transforming the compiled template into the
       proper output give the input view data.
 
+
     mu.renderText(String template, Object view, Object partials)
 
       Returns Stream
 
       Like render, except takes a template as a string and an object for the partials.
       This is not a very performant way to use mu, so only use this for dev/testing.
+
 
     mu.clearCache(String templateNameOrNull)
 
