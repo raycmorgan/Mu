@@ -1,5 +1,5 @@
-var sys = require('sys'),
-    mu  = require('./lib/mu');
+var util = require('util'),
+    mu   = require('./lib/mu');
 
 var template = "ÏHello{{#user}} {{name}}{{/user}}! " + 
                "Hello{{^user}} {{name}}{{/user}}! " + 
@@ -49,11 +49,11 @@ var numErrors = 0;
 
 var stream = mu.render('bar.html', view)
   .on('data', function (data) { 
-    sys.print(data);
+    util.print(data);
     //stream.pause();
     //setTimeout(function () { stream.resume(); }, 50);
   })
-  .on('end',  function () { sys.print('\nDONE, Errors: ' + numErrors + '\n'); })
+  .on('end',  function () { util.print('\nDONE, Errors: ' + numErrors + '\n'); })
   .on('error', function (err) { numErrors++; });
 
 
