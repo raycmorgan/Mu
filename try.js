@@ -1,4 +1,4 @@
-var sys = require('sys'),
+var sys = require('util'),
     mu  = require('./lib/mu');
 
 var template = "ÏHello{{#user}} {{name}}{{/user}}! " + 
