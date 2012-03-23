@@ -7,6 +7,7 @@ mu.root = path.join(__dirname, 'examples');
 
 [
   'boolean',
+  'carriage_return',
   'comments',
   'complex',
   'deep_partial',
@@ -21,7 +22,7 @@ mu.root = path.join(__dirname, 'examples');
   'simple',
   'twice',
   'two_in_a_row',
-  'unescaped',
+  'unescaped'
 ].forEach(function (name) {
   var js   = fs.readFileSync(path.join(mu.root, name + '.js')).toString(),
       text = fs.readFileSync(path.join(mu.root, name + '.txt')).toString();
