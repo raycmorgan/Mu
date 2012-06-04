@@ -4,5 +4,6 @@
   taxed_value: function () {
     return this.value - (this.value * 0.4);
   },
-  in_ca: true
+  in_ca: true,
+  owner: null
 }
