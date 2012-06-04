@@ -20,6 +20,7 @@ mu.root = path.join(__dirname, 'examples');
   'recursion_with_same_names',
   'reuse_of_enumerables',
   'simple',
+  'dot_notation',
   'twice',
   'two_in_a_row',
   'unescaped'
