@@ -1,3 +1,6 @@
 {
-  admin: false
+  admin: false,
+  person: {
+    name: "Jim"
+  }
 }
