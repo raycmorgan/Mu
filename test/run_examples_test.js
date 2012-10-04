@@ -11,6 +11,7 @@ mu.root = path.join(__dirname, 'examples');
   'carriage_return',
   'comments',
   'complex',
+  'date',
   'deep_partial',
   // 'delimiters',
   'error_not_found',
