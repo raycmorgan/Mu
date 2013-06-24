@@ -16,50 +16,50 @@ Currently mu does not support changing the tag form ({{ }} to say <% %>).
 ## Usage
 
 There are a few ways to use mu 0.5. Here is the simplest:
+```javascript
+var mu = require('mu2'); // notice the "2" which matches the npm repo, sorry..
 
-    var mu = require('mu2'); // notice the "2" which matches the npm repo, sorry..
-
-    mu.root = __dirname + '/templates'
-    mu.compileAndRender('index.html', {name: "john"})
-      .on('data', function (data) {
-        console.log(data.toString());
-      });
-
+mu.root = __dirname + '/templates'
+mu.compileAndRender('index.html', {name: "john"})
+  .on('data', function (data) {
+    console.log(data.toString());
+  });
+```
 Here is an example mixing it with the http module:
+```javascript
+var http = require('http')
+  , util = require('util')
+  , mu   = require('mu2');
 
-    var http = require('http')
-      , util = require('util')
-      , mu   = require('mu2');
+mu.root = __dirname + '/templates';
 
-    mu.root = __dirname + '/templates';
+  http.createServer(function (req, res) {
 
-    http.createServer(function (req, res) {
+  var stream = mu.compileAndRender('index.html', {name: "john"});
+  util.pump(stream, res);
 
-      var stream = mu.compileAndRender('index.html', {name: "john"});
-      util.pump(stream, res);
-
-    }).listen(8000);
-
+}).listen(8000);
+```
 Taking that last example here is a little trick to always compile the templates
 in development mode (so the changes are immediately reflected).
+```javascript
+var http = require('http')
+  , util = require('util')
+  , mu   = require('mu2');
 
-    var http = require('http')
-      , util = require('util')
-      , mu   = require('mu2');
+mu.root = __dirname + '/templates';
 
-    mu.root = __dirname + '/templates';
+http.createServer(function (req, res) {
 
-    http.createServer(function (req, res) {
+  if (process.env.NODE_ENV == 'DEVELOPMENT') {
+    mu.clearCache();
+  }
 
-      if (process.env.NODE_ENV == 'DEVELOPMENT') {
-        mu.clearCache();
-      }
+  var stream = mu.compileAndRender('index.html', {name: "john"});
+  util.pump(stream, res);
 
-      var stream = mu.compileAndRender('index.html', {name: "john"});
-      util.pump(stream, res);
-
-    }).listen(8000);
-
+}).listen(8000);
+```
 ## API
 
     mu.root
