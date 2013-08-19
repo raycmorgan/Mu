@@ -4,5 +4,11 @@
 , "version" : "0.5.19"
 , "homepage": "http://github.com/raycmorgan/mu"
 , "author" : "RayMorgan <ray@rumgr.com>"
-, "main" : "lib/mu"
+, "main" : "lib/mu",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.github.com/raycmorgan/Mu/master/LICENSE"
+    }
+  ]
 }
