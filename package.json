@@ -4,6 +4,7 @@
 , "version" : "0.5.20"
 , "homepage": "http://github.com/raycmorgan/mu"
 , "author" : "RayMorgan <ray@rumgr.com>"
+, "bin": "bin/mu"
 , "main" : "lib/mu",
   "licenses": [
     {
