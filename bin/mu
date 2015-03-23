@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 var util     = require('util'),
-    mu       = require('./mu'),
-    parser   = require('./mu/parser');
+    mu       = require('../lib/mu'),
+    parser   = require('../lib/mu/parser');
 
 var stdin = process.openStdin();
 
