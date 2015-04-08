@@ -1,0 +1,27 @@
+#!/usr/bin/env node
+
+var mu = require('../lib/mu');
+var path = require('path');
+var root = require('app-root-path');
+var yargs = require('yargs');
+
+var options = yargs.alias('h', 'help')
+                   .alias('r', 'root')
+                   .alias('v', 'view')
+                   .command('template', 'Input filename')
+                   .default('r', '.')
+                   .default('v', '{ }')
+                   .demand(1)
+                   .describe('r', 'Templates base folder')
+                   .describe('v', 'JSON data to be rendered with')
+                   .example('$0 --root templates main.html', 'render the main template')
+                   .help('h')
+                   .usage('Usage: $0 [options] <template>')
+                   .version(function() { return require('../package').version; })
+                   .argv;
+
+options.t = options.template = options._.shift();
+options.v = options.view = JSON.parse(options.v);
+
+mu.root = path.resolve(root.path, path.normalize(options.root));
+mu.compileAndRender(options.template, options.view).pipe(process.stdout);

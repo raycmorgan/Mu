@@ -120,5 +120,37 @@ http.createServer(function (req, res) {
 
       Clears the cache for a specific template. If the name is omitted, clears all cache.
 
+## CLI
 
+The command line interface is quite simple to use:
 
+```sh
+mu [options] <template>
+```
+
+**Options**
+
+```
+-r, --root  Templates base folder ("." as default)
+-v, --view  JSON data to be rendered with ("{ }" as default)
+-h, --help  Show help
+--version   Show version number
+```
+
+**Example**
+
+Let's say you have the following file structure:
+
+```
+├ build
+└ templates
+  ├ partials
+  │ └ header.html
+  └ main.html
+```
+
+And you want to render `templates/main.html` into `build/index.html`:
+
+```sh
+mu --root templates --view '{"foo": "bar"}' main.html > build/index.html
+```

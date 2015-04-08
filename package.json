@@ -1,14 +1,23 @@
-{ "name": "mu2"
-, "description": "A Mustache template engine for Node.js"
-, "keywords": ["template", "mustache"]
-, "version" : "0.5.20"
-, "homepage": "http://github.com/raycmorgan/mu"
-, "author" : "RayMorgan <ray@rumgr.com>"
-, "main" : "lib/mu",
+{
+  "name": "mu2",
+  "description": "A Mustache template engine for Node.js",
+  "keywords": [
+    "template",
+    "mustache"
+  ],
+  "version": "0.6.1",
+  "homepage": "http://github.com/raycmorgan/mu",
+  "author": "RayMorgan <ray@rumgr.com>",
+  "bin": "bin/mu",
+  "main": "lib/mu",
   "licenses": [
     {
       "type": "MIT",
       "url": "https://raw.github.com/raycmorgan/Mu/master/LICENSE"
     }
-  ]
+  ],
+  "dependencies": {
+    "app-root-path": "^1.0.0",
+    "yargs": "^3.6.0"
+  }
 }
