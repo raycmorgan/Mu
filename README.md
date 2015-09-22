@@ -36,7 +36,7 @@ mu.root = __dirname + '/templates';
   http.createServer(function (req, res) {
 
   var stream = mu.compileAndRender('index.html', {name: "john"});
-  util.pump(stream, res);
+  stream.pipe(res);
 
 }).listen(8000);
 ```
@@ -119,6 +119,3 @@ http.createServer(function (req, res) {
     mu.clearCache(String templateNameOrNull)
 
       Clears the cache for a specific template. If the name is omitted, clears all cache.
-
-
-
