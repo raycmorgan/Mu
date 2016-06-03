@@ -5,10 +5,5 @@
 , "homepage": "http://github.com/raycmorgan/mu"
 , "author" : "RayMorgan <ray@rumgr.com>"
 , "main" : "lib/mu",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://raw.github.com/raycmorgan/Mu/master/LICENSE"
-    }
-  ]
+  "license": "MIT"
 }
