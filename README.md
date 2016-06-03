@@ -36,7 +36,7 @@ mu.root = __dirname + '/templates';
   http.createServer(function (req, res) {
 
   var stream = mu.compileAndRender('index.html', {name: "john"});
-  util.pump(stream, res);
+  stream.pipe(res);
 
 }).listen(8000);
 ```

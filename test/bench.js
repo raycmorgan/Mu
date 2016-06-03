@@ -1,7 +1,6 @@
 var fs     = require('fs'),
     path   = require('path'),
-    mu     = require('../lib/mu'),
-    pump   = require('util').pump;
+    mu     = require('../lib/mu');
 
 mu.root = path.join(__dirname, 'examples');
 
@@ -22,7 +21,7 @@ mu.compile('complex.html', function (err, compiled) {
   //  .on('data', function (c) { buffer += c.toString(); })
   //  .on('end', function () { console.log(buffer); });
   
-  pump(mu.render('complex.html', js), process.stdout);
+  mu.render('complex.html', js).pipe(process.stdout);
 
   var i = 0, d = new Date();
   
