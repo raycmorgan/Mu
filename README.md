@@ -83,7 +83,7 @@ http.createServer(function (req, res) {
       Callback (Error err, Any CompiledTemplate)
 
       This function is used to compile a template. Usually you will not use it
-      directly but when doing wierd things, this might work for you. Does not
+      directly but when doing weird things, this might work for you. Does not
       use the internal cache when called multiple times, though it does add the
       compiled form to the cache.
 
