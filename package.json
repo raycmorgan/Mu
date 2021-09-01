@@ -2,6 +2,10 @@
 , "description": "A Mustache template engine for Node.js"
 , "keywords": ["template", "mustache"]
 , "version" : "0.5.21"
+, "repository": {
+    "type": "git",
+    "url": "https://github.com/raycmorgan/mu.git"
+  }
 , "homepage": "http://github.com/raycmorgan/mu"
 , "author" : "RayMorgan <ray@rumgr.com>"
 , "main" : "lib/mu",
